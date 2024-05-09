@@ -1,5 +1,5 @@
-import user_account_service_pb2_grpc as stub_s
-import user_account_service_pb2 as user_acc
+import yandex.cloud.iam.v1.user_account_service_pb2_grpc as stub_s
+import yandex.cloud.iam.v1.user_account_service_pb2 as user_acc
 
 import channel
 
@@ -18,7 +18,11 @@ print(
     user.yandex_passport_user_account,
 )
 
-user = yapassport_management.get_user_by_email("vovasst@yandex.ru")
+bozhinoski = "bozhinoski@yandex.ru"
+vova = "vovasst@yandex.ru"
+
+user = yapassport_management.get_user_by_email(bozhinoski)
+
 print(
     user.id,
     user.yandex_passport_user_account,
