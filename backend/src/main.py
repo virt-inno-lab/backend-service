@@ -7,14 +7,6 @@ from move_user import get_current_user_group, Cap, update_cap
 from yapassport_management import get_user_by_email
 from db_logger import log
 
-bozhinoski = "bozhinoski@yandex.ru"
-vova = "vovasst@yandex.ru"
-stepan = "tsepa.step@yandex.ru"
-i = "sanka.buchnev@ya.ru"
-
-# move_user.update_cap(i, move_user.Cap.cloud_auditor)
-# ValueError because there is no such user!! woah!!
-# move_user.update_cap(bozhinoski, move_user.Cap.cloud_auditor)
 router = APIRouter()
 
 
