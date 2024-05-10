@@ -3,6 +3,7 @@ certifi==2024.2.2
 cffi==1.16.0
 charset-normalizer==3.3.2
 cryptography==42.0.7
+fastapi==0.111.0
 gcloud
 google-api-core
 google-api-python-client==2.128.0

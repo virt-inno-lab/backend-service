@@ -1,4 +1,3 @@
-from grpc import StatusCode
 import yandex.cloud.iam.v1.yandex_passport_user_account_service_pb2_grpc as stub_
 import yandex.cloud.iam.v1.yandex_passport_user_account_service_pb2 as yandex_pass
 

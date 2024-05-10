@@ -21,7 +21,7 @@ class Cap(Enum):
     cloud_viewer = cloud_viewer_group_id
 
 
-def __get_current_user_group(user_id, caps=Cap) -> Cap:
+def get_current_user_group(user_id, caps=Cap) -> Cap:
     ans = Cap.nobody
     for group in caps:
         group_id = group.value
@@ -40,7 +40,7 @@ def __get_current_user_group(user_id, caps=Cap) -> Cap:
 def update_cap(email: str, cap: Cap):
     user = yapassport_management.get_user_by_email(email)
     
-    ug = __get_current_user_group(user.id)
+    ug = get_current_user_group(user.id)
     if ug == Cap.nobody:
         raise ValueError("User not found!")
     
