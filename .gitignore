@@ -1,3 +1,6 @@
+# authorized key for the service account
+*authorized_key.json
+
 # proto output files
 *pb2*
 
