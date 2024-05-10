@@ -33,6 +33,12 @@ for group management, the other one is for logging only. These service accounts
 have limited roles, so in case of token leak or something else, we reduce the
 blast radius.
 
+### Logging
+Logging is implemented using [Yandex Data Stream](https://yandex.cloud/en/docs/data-streams/concepts/glossary?utm_source=console&utm_medium=help-center&utm_campaign=data-streams)
+service, which is simple to use and simple to integrate into the production 
+environment. It uses boto3 as a client and Yandex Cloud managed kinesis 
+installation to ingest logs.
+
 ## Installation
 
 ### Backend requirements installation
