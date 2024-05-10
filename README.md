@@ -1,5 +1,7 @@
 # Virtualization lab inno
 
+## https://iam-service.ddns.net/
+
 ## Description
 This is a simple implementation of the Identity Access Management (IAM) system
 within the context of the Yandex Cloud for the Total Virtualization course of
@@ -9,8 +11,10 @@ The goal of the service is simple: to provide the user the ability to request
 the elevation of the priviledges through the cloud management tools. We have
 developed three distinct groups with different priveledge set.
 1. asmnt-ydb-auditor    - group that can audit only the YDB resource
-1. asmnt-cloud-auditor  - group that can audit the whole cloud
-1. asmnt-cloud-viewer   - group that can view the settings of the whole cloud
+2. asmnt-cloud-auditor  - group that can audit the whole cloud
+3. asmnt-cloud-viewer   - group that can view the settings of the whole cloud
+
+You can see this groups and their members here: https://org.yandex.cloud/groups
 
 The roles described above are given in the order of [increasing
 capabilities](https://yandex.cloud/en/docs/iam/roles-reference), so the latter
@@ -33,21 +37,30 @@ blast radius.
 
 ### Backend requirements installation
 - Install the client requirements, run the following:
-```sh
+```shell
+cd backend
 python -m venv env
 source env/bin/activate
 env/bin/python -m pip install -r requirements.txt
 ```
 
 ### Frontend requirements installation
-# TODO:
-
-
-## Usage
-# TODO:
-To run the service, execute the following command:
-```sh
+- Install npm
+- Run the following:
+```shell
+cd frontend
+npm i
 ```
+
+
+## Docker build and run
+To run the service, execute the following command:
+```shell
+docker build -t iam .
+docker run -p 127.0.0.1:8000:80 -v <authorized_key_json_path>:/app/auth_key.json:ro -e AUTH_TOKEN_PATH=/app/auth_key.json -e LOGGING_SECRET_KEY=<LOGGING_SECRET_KEY> -e LOGGING_SECRET_KEY_ID=<LOGGING_SECRET_KEY_ID> -d iam
+```
+
+And check your service at http://127.0.0.1:8000
 
 ## Configuration
 
