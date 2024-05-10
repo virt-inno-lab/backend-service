@@ -8,20 +8,6 @@
  source env/bin/activate
  env/bin/python -m pip install -r requirements.txt
  ```
-1. Run the proto compilation
- ```sh
- make
- ```
-If you see the similar output, then everything is allright:
- ```sh
- user$ make
- env/bin/python -m grpc_tools.protoc -I ./cloudapi/ -I ./cloudapi/third_party/googleapis/ --proto_path=./cloudapi/yandex/cloud/iam/v1/ --python_out="./src/" \
-         --grpc_python_out="./src/" --pyi_out="./src/" user_account_service.proto
- env/bin/python -m grpc_tools.protoc -I ./cloudapi/ -I ./cloudapi/third_party/googleapis/ --proto_path=./cloudapi/yandex/cloud/iam/v1/ --python_out="./src/" \
-         --grpc_python_out="./src/" --pyi_out="./src/" user_account.proto
- ```
-
-1. To clean afterwards, run `make clean`
 
 ## Usage
 To run the service, execute the following command:
