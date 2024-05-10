@@ -1,5 +1,14 @@
 import React, {useEffect, useState} from "react";
-import {Box, Button, Container, Flex, Group, MantineProvider, Textarea, TextInput} from "@mantine/core";
+import {
+    Box,
+    Button,
+    Container,
+    Group,
+    Loader,
+    MantineProvider,
+    Textarea,
+    TextInput
+} from "@mantine/core";
 import {isEmail, isNotEmpty, useForm} from "@mantine/form";
 import axios, {AxiosError} from "axios";
 import {notifications, Notifications} from "@mantine/notifications";
@@ -7,6 +16,17 @@ import {notifications, Notifications} from "@mantine/notifications";
 type Cap = "ydb-auditor" | "cloud-auditor" | "cloud-viewer";
 
 const AllCaps: Cap[] = ["ydb-auditor", "cloud-auditor", "cloud-viewer"];
+
+function capToName(cap: Cap): string {
+    switch (cap) {
+        case "ydb-auditor":
+            return "YDB Auditor";
+        case "cloud-auditor":
+            return "Cloud Auditor";
+        case "cloud-viewer":
+            return "Cloud viewer";
+    }
+}
 
 export function App() {
     const form = useForm({
@@ -22,6 +42,7 @@ export function App() {
         },
     });
     const [cap, setCap] = useState<Cap>();
+    const [processing, setProcessing] = useState<boolean>(false);
 
     const refreshCaps = async (silent: boolean) => {
         try {
@@ -45,6 +66,7 @@ export function App() {
                     title: "Internal error",
                     message: err
                 });
+            setCap(null);
         }
     };
 
@@ -58,13 +80,21 @@ export function App() {
 
     const requestElevation = (newCap: Cap) => {
         if (!form.validate().hasErrors) {
-            axios.post("/api/request_elevation", {
+            setProcessing(true);
+            axios.post("/api/update_caps", {
                 email: form.values.email,
                 reason: form.values.reason,
                 cap: newCap
             })
-                .then(() => notifications.show({title: "Request sent", message: "You could check logs now"}))
-                .catch((err) => notifications.show({title: "Internal error", message: err}));
+                .then(() => {
+                    notifications.show({title: "Request sent", message: "You could check logs now"})
+                    refreshCaps(true);
+                })
+                .catch((err) => notifications.show({
+                    title: "Internal error",
+                    message: err
+                }))
+                .finally(() => setProcessing(false));
         }
     };
     useEffect(() => {
@@ -102,7 +132,15 @@ export function App() {
                 <Group justify="flex-end" mb="md">
                     <Button variant="default" mb="md" onClick={manualRefreshCallback}>Manual refresh</Button>
                 </Group>
-                {cap && AllCaps.filter(e => e !== cap).map(c => <Button>{c}</Button>)}
+                {cap && !processing &&
+                    <Group grow>
+                        {AllCaps.filter(e => e !== cap).map(c =>
+                            <Button onClick={() => requestElevation(c)} key={c}>{capToName(c)}</Button>)}
+                    </Group>}
+                {processing &&
+                    <Group justify="center" mb="md">
+                        <Loader color="blue" type="dots"/>
+                    </Group>}
             </Box>
         </Container>
     </MantineProvider>;
