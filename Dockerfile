@@ -26,4 +26,5 @@ COPY ./backend/src /app
 COPY --from=FRONTEND-BUILDER /build/dist/ /app/static
 COPY --from=FRONTEND-BUILDER /build/public/ /app/static
 
+ENV STATIC_RESOURCES=/app/static
 

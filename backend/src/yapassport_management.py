@@ -12,7 +12,7 @@ def get_user_by_email(email: str):
 
     try:
         user = stub.GetByLogin(req)
-        return user
+        return user.id
     except grpc._channel._InactiveRpcError as error:
         if error.code() == grpc.StatusCode.NOT_FOUND:
             raise ValueError("No such user!")
